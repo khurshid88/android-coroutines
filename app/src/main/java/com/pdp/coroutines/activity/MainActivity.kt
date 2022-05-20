@@ -38,26 +38,26 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun initViews() {
         tv_post = findViewById(R.id.tv_post)
 
-        launch {
-            try {
-                supervisorScope {
-                    val firstPost = async { fetchFirstPost() }
-                    val secondPost = async { fetchSecondPost() }
-                    val first = try {
-                        firstPost.await()
-                    } catch (e: Exception) {
-                        Post(1, 1, "", "")
-                    }
-                    val second = try {
-                        secondPost.await()
-                    } catch (e: Exception) {
-                        Post(2, 1, "", "")
-                    }
-                }
-            } catch (exception: Exception) {
-                Log.d("TAG", "$exception handled !")
-            }
-        }
+//        launch {
+//            try {
+//                supervisorScope {
+//                    val firstPost = async { fetchFirstPost() }
+//                    val secondPost = async { fetchSecondPost() }
+//                    val first = try {
+//                        firstPost.await()
+//                    } catch (e: Exception) {
+//                        Post(1, 1, "", "")
+//                    }
+//                    val second = try {
+//                        secondPost.await()
+//                    } catch (e: Exception) {
+//                        Post(2, 1, "", "")
+//                    }
+//                }
+//            } catch (exception: Exception) {
+//                Log.d("TAG", "$exception handled !")
+//            }
+//        }
 
 //        launch {
 //            try {
@@ -71,9 +71,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 //        }
 
 
-//        GlobalScope.launch(Dispatchers.Main + handler) {
-//            fetchFirstPost() // do on IO thread and back to UI Thread
-//        }
+        GlobalScope.launch(Dispatchers.Main + handler) {
+            var post = fetchFirstPost() // do on IO thread and back to UI Thread
+            showPost(post)
+        }
 
 //        GlobalScope.launch(Dispatchers.Main) {
 //            try {
